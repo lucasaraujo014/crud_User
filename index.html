@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Lucas Araujo">
+    <title>Sistema CRUD</title>
+</head>
+
+<body>
+    <script>
+        let arrUsers = [];
+
+
+        function showMenu() {
+            return parseInt(prompt(`
+                *****Menu*****
+                [1] - Cadastra usuario
+                [2] - Lista de Usuário(s)
+                [3] - Atualizar Usuário
+                [4] - Deletar usuario
+                [5] - Sair do Programa         
+            `))
+
+        }
+        const AddUser = () => {
+            const nameUser = prompt("Informe o nome da Pessoa:");
+            const emailUser = prompt("Informe o email da Pessoa:");
+            if (!nameUser || !emailUser) {
+                alert("O campos é obrigatorio");
+
+            }
+
+            arrUsers.push({ nameUser, emailUser })
+            console.log(arrUsers);
+
+        }
+        const ListUser = () => {
+            let listUser = '';
+            arrUsers.forEach((dataUser) => {
+                listUser += `
+                Nome: ${dataUser.nameUser}, Email ${dataUser.emailUser}`
+            })
+            console.log(listUser);
+            alert("******Lista de usuários*****" + listUser);
+        }
+        function UpdateUserInfo() {
+            const findEmail = prompt("Informe o email que voce deseja atualizar!")
+            const usuarioEncontrado = arrUsers.find(user => user.emailUser === findEmail);
+            if (!usuarioEncontrado) {
+                alert("Usuário não foi encontrado!")
+                return;
+            }
+            const novoEmail = prompt("Informe  o novoseu Email:")
+            const novoNomeUsuario = prompt("Informe o nome do usuario")
+            novoEmail ? (usuarioEncontrado.emailUser = novoEmail) : null;
+
+            if (novoNomeUsuario) {
+                usuarioEncontrado.nameUser = novoNomeUsuario;
+            }
+
+            alert("Usuário foi atualizado com sucesso!");
+        function DeleteUser() {
+            const emailDelete = prompt ("Informe o email para realizar o delete ") 
+            const emailDeleteVerification = arrUsers.find(email => email.emailUser === emailDelete )
+            const confirmacao = window.confirm(`Voce deseja mesmo exlcuir o usuario ${emailDelete}`)
+            if (!confirmacao) {
+                arrUsers.splice(emailDeleteVerification, 1)
+            }
+            alert("Usuario deletado com sucesso")
+        }
+        }
+        let opcaoUser = true
+        while (opcaoUser) {
+
+            switch (showMenu()) {
+                case 1:
+                    AddUser()
+                    break;
+                case 2:
+                    ListUser()
+                    break;
+                case 3:
+                    UpdateUserInfo()
+                    break;
+                case 4:
+                    DeleteUser()
+                    break;
+                case 5:
+                    alert("Saindo do programa")
+                    opcaoUser = false
+                    break;
+                default:
+                    alert("Opção invalida")
+                    break;
+            }
+        }
+    </script>
+</body>
+
+</html>
